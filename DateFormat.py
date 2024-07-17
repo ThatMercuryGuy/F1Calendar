@@ -9,4 +9,4 @@ with open ('Temp.csv', 'w', newline = '') as g:
         w = csv.writer (g)
         for i in r:
             d = i[0][-2::] + '-' + i[0][:3]
-            w.writerow([d, i[1], i[2]])
+            w.writerow ([d, i[1], i[2]])
