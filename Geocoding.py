@@ -15,6 +15,6 @@ with open ('Formula1.csv') as f:
         
         next (r)
         for i in r:
-            location = geolocator.geocode(i[-1])
+            location = geolocator.geocode (i[-1])
             w.writerow (i + [location.latitude, location.longitude])
 
