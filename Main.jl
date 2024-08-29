@@ -47,14 +47,28 @@ function haversine(coord1, coord2)
     return distance
 end
 
-
-function extractOrder(z)
-    arr = []
-    for i in 1:n, j in [1:(i-1); (i+1):n]
-        if value(z[i,j]) > 0
-            println(df[i, 2], " to ", df[j, 2])
+function find(i::Int64, z)
+    for j in [1:(i-1); (i+1):n]
+        if value(z[i, j]) > 0
+            return j
         end
     end
+end
+
+function extractOrder(z)
+    arr = [2]
+    i = 2
+    while true
+        k = find(i, z)
+        push!(arr, k)
+        i = k
+
+        if i == 2
+            break
+        end
+    end
+
+    return arr
 end
 
 using JuMP
@@ -68,6 +82,12 @@ n = 23
 @constraint(model, one_incoming_edge[j in 1:n], sum(z[i, j] for i in 1:n if i != j) == 1)
 @constraint(model, one_outgoing_edge[i in 1:n], sum(z[i, j] for j in 1:n if i != j) == 1)
 
+@variable(model, 1 <= place[1:n] <= n)
+
+# if `z[i, j]` is 1 then
+#   `place[i] >= place[j] + 1`
+
+@constraint(model, mtz[i in 1:n, j in 1:n; i != j && j != 1], n * (1 - z[i, j]) + place[i] >= place[j] + 1)
 @objective(model, Min, sum(z[i, j] * haversine([df[i, :].Latitude, df[i, :].Longitude], [df[j, :].Latitude, df[j, :].Longitude]) for i in 1:n for j in 1:n if i != j));
 
 optimize!(model)
