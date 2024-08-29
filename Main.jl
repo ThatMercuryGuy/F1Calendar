@@ -1,4 +1,3 @@
-using Distances
 using CSV
 using DataFrames
 
@@ -47,3 +46,28 @@ function haversine(coord1, coord2)
     
     return distance
 end
+
+
+function extractOrder(z)
+    arr = []
+    for i in 1:n, j in [1:(i-1); (i+1):n]
+        if value(z[i,j]) > 0
+            println(df[i, 2], " to ", df[j, 2])
+        end
+    end
+end
+
+using JuMP
+import HiGHS
+
+model = JuMP.Model(HiGHS.Optimizer)
+
+n = 23
+@variable(model, z[i in 1:n, j in [1:(i-1); (i+1):n]], Bin);
+
+@constraint(model, one_incoming_edge[j in 1:n], sum(z[i, j] for i in 1:n if i != j) == 1)
+@constraint(model, one_outgoing_edge[i in 1:n], sum(z[i, j] for j in 1:n if i != j) == 1)
+
+@objective(model, Min, sum(z[i, j] * haversine([df[i, :].Latitude, df[i, :].Longitude], [df[j, :].Latitude, df[j, :].Longitude]) for i in 1:n for j in 1:n if i != j));
+
+optimize!(model)
