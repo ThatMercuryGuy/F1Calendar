@@ -18,6 +18,9 @@ Constraints to Consider
     -Account for Spring Break in the middle of the year (All teams move to Britain/Italy)
     -Account for all teams having to ship new car from Britain/Italy factories
 
+3. Temperature Ranges
+
+4. Ramadan Months - Avoid Scheduling Races in Islamic Nations
 =#
 
 df = DataFrame(csv_file)
@@ -71,6 +74,11 @@ function extractOrder(z)
     return arr
 end
 
+function parseOrder(v::Vector{Int64})
+    for i in v
+        println(df[i,2])
+    end
+end
 using JuMP
 import HiGHS
 
