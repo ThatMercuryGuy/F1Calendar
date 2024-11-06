@@ -99,3 +99,12 @@ n = 23
 @objective(model, Min, sum(z[i, j] * haversine([df[i, :].Latitude, df[i, :].Longitude], [df[j, :].Latitude, df[j, :].Longitude]) for i in 1:n for j in 1:n if i != j));
 
 optimize!(model)
+
+#Doubts to Ask Hans:
+#=
+
+-> Globe Mapping
+-> Recording
+-> Project Samples
+
+=#
