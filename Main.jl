@@ -79,6 +79,44 @@ function parseOrder(v::Vector{Int64})
         println(df[i,2])
     end
 end
+
+using PlotlyBase
+function draw_map(points, travel_route)
+    route_idx = sortperm(travel_route)   # numbers drawn on points
+    trace_points = scattergeo(
+        locationmode="ISO-3",
+        lon=points[!, 2],
+        lat=points[!, 1],
+        text=[string(i) for i in route_idx],
+        textposition="bottom right",
+        textfont=attr(family="Arial Black", size=18, color="blue"),
+        mode="markers+text",
+        marker=attr(size=10, color="blue"),
+        name="Point"
+    )
+
+    trace_line = scattergeo(
+        locationmode="ISO-3",
+        lat=[points[i, 1] for i in travel_route],
+        lon=[points[i, 2] for i in travel_route],
+        mode="lines",
+        line=attr(width=2, color="red"),
+        name="Route"
+    )
+
+    trace_return = scattergeo(
+        locationmode="ISO-3",
+        lat=[points[1, 1], points[travel_route[end], 1]],
+        lon=[points[1, 2], points[travel_route[end], 2]],
+        mode="lines",
+        line=attr(width=2, color="green"),
+        name="Return"
+    )
+
+    return [trace_points, trace_line, trace_return]
+end
+
+
 using JuMP
 import HiGHS
 
@@ -99,7 +137,7 @@ n = 23
 @objective(model, Min, sum(z[i, j] * haversine([df[i, :].Latitude, df[i, :].Longitude], [df[j, :].Latitude, df[j, :].Longitude]) for i in 1:n for j in 1:n if i != j));
 
 optimize!(model)
-
+draw_map(df[!, 4:5], extractOrder(z))
 #Doubts to Ask Hans:
 #=
 
