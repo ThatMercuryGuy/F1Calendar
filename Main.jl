@@ -52,7 +52,7 @@ end
 
 function find(i::Int64, z)
     for j in [1:(i-1); (i+1):n]
-        if value(z[i, j]) > 0
+        if value(z[i, j]) ≈ 1
             return j
         end
     end
@@ -87,7 +87,7 @@ function draw_map(points, travel_route)
         locationmode="ISO-3",
         lon=points[!, 2],
         lat=points[!, 1],
-        text=[string(i) for i in route_idx],
+        text=[string(i) for i in travel_route],
         textposition="bottom right",
         textfont=attr(family="Arial Black", size=18, color="blue"),
         mode="markers+text",
@@ -104,16 +104,16 @@ function draw_map(points, travel_route)
         name="Route"
     )
 
-    trace_return = scattergeo(
+#=    trace_return = scattergeo(
         locationmode="ISO-3",
         lat=[points[1, 1], points[travel_route[end], 1]],
         lon=[points[1, 2], points[travel_route[end], 2]],
         mode="lines",
         line=attr(width=2, color="green"),
         name="Return"
-    )
+    ) =#
 
-    return [trace_points, trace_line, trace_return]
+    return [trace_points, trace_line]
 end
 
 
