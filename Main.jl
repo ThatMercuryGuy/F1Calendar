@@ -87,9 +87,9 @@ using PlotlyBase
 function draw_map(points, travel_route, z)
     trace_points = scattergeo(
         locationmode="ISO-3",
-        lon=points[!, 2],
-        lat=points[!, 1],
-        hovertext=parseOrder(extractOrder(z)),
+        lon=points[!, 3],
+        lat=points[!, 2],
+        hovertext=points[!, 1],
         textposition="bottom right",
         textfont=attr(family="Arial Black", size=7, color="blue"),
         mode="markers+text",
@@ -102,8 +102,8 @@ function draw_map(points, travel_route, z)
 
     trace_line = scattergeo(
         locationmode="ISO-3",
-        lat=[points[i, 1] for i in travel_route],
-        lon=[points[i, 2] for i in travel_route],
+        lat=[points[i, 2] for i in travel_route],
+        lon=[points[i, 3] for i in travel_route],
         mode="lines",
         line=attr(width=2, color="red"),
         name="Route",
@@ -138,7 +138,7 @@ n = 23
 optimize!(model)
 
 using PlotlyJS
-Plot(draw_map(df[!, 4:5], extractOrder(z), z), Layout(
+Plot(draw_map(df[!, [2,4,5]], extractOrder(z), z), Layout(
     width=1280, height=720,
     margin=attr(l=10,r=10,t=10,b=10),
     showcountries=true,
