@@ -75,24 +75,29 @@ function extractOrder(z)
 end
 
 function parseOrder(v::Vector{Int64})
+    returnVec = Vector{String}([])
     for i in v
-        println(df[i,2])
+        push!(returnVec, df[i,2])
     end
+
+    return returnVec
 end
 
 using PlotlyBase
-function draw_map(points, travel_route)
-    route_idx = sortperm(travel_route)   # numbers drawn on points
+function draw_map(points, travel_route, z)
     trace_points = scattergeo(
         locationmode="ISO-3",
         lon=points[!, 2],
         lat=points[!, 1],
-        text=[string(i) for i in travel_route],
+        hovertext=parseOrder(extractOrder(z)),
         textposition="bottom right",
-        textfont=attr(family="Arial Black", size=18, color="blue"),
+        textfont=attr(family="Arial Black", size=7, color="blue"),
         mode="markers+text",
-        marker=attr(size=10, color="blue"),
-        name="Point"
+        marker=attr(size=8, color="blue"),
+        name="Race Location",
+        projection="mercator",
+        width = 1280,
+        height = 720
     )
 
     trace_line = scattergeo(
@@ -101,7 +106,10 @@ function draw_map(points, travel_route)
         lon=[points[i, 2] for i in travel_route],
         mode="lines",
         line=attr(width=2, color="red"),
-        name="Route"
+        name="Route",
+        projection="mercator",
+        width = 1280,
+        height = 720
     )
 
     return [trace_points, trace_line]
@@ -130,7 +138,12 @@ n = 23
 optimize!(model)
 
 using PlotlyJS
-plot(draw_map(df[!, 4:5], extractOrder(z)))
+Plot(draw_map(df[!, 4:5], extractOrder(z), z), Layout(
+    width=1280, height=720,
+    margin=attr(l=10,r=10,t=10,b=10),
+    showcountries=true,
+    countrycolor="green"
+))
 #Doubts to Ask Hans:
 #=
 
