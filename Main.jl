@@ -104,15 +104,6 @@ function draw_map(points, travel_route)
         name="Route"
     )
 
-#=    trace_return = scattergeo(
-        locationmode="ISO-3",
-        lat=[points[1, 1], points[travel_route[end], 1]],
-        lon=[points[1, 2], points[travel_route[end], 2]],
-        mode="lines",
-        line=attr(width=2, color="green"),
-        name="Return"
-    ) =#
-
     return [trace_points, trace_line]
 end
 
