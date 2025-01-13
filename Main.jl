@@ -144,11 +144,4 @@ Plot(draw_map(df[!, [2,4,5]], extractOrder(z), z), Layout(
     showcountries=true,
     countrycolor="green"
 ))
-#Doubts to Ask Hans:
-#=
 
--> Globe Mapping
--> Recording
--> Project Samples
-
-=#
