@@ -18,9 +18,7 @@ Constraints to Consider
     -Account for Spring Break in the middle of the year (All teams move to Britain/Italy)
     -Account for all teams having to ship new car from Britain/Italy factories
 
-3. Temperature Ranges
-
-4. Ramadan Months - Avoid Scheduling Races in Islamic Nations
+3. Ramadan Months - Avoid Scheduling Races in Islamic Nations
 =#
 
 df = DataFrame(csv_file)
@@ -71,7 +69,7 @@ function extractOrder(z)
         end
     end
 
-    return arr
+    return arr[1:23]
 end
 
 function parseOrder(v::Vector{Int64})
@@ -121,13 +119,40 @@ import HiGHS
 
 model = JuMP.Model(HiGHS.Optimizer)
 
+set_optimizer_attributes(model, 
+    "parallel" => "on",
+    "time_limit" => 600.0  # Set time limit
+)
+
+
 n = 23
 @variable(model, z[i in 1:n, j in [1:(i-1); (i+1):n]], Bin);
+
+@variable(model, is_european_race[1:n], Bin)
+@constraint(model, [i in 1:n], is_european_race[i] == df[i, :is_european_race])
+
+
+@variable(model, is_tropical_race[1:n], Bin)
+@constraint(model, [i in 1:n], is_tropical_race[i] == df[i, :is_tropical_race])
+
+@variable(model, 1 <= place[1:n] <= n, Int)
 
 @constraint(model, one_incoming_edge[j in 1:n], sum(z[i, j] for i in 1:n if i != j) == 1)
 @constraint(model, one_outgoing_edge[i in 1:n], sum(z[i, j] for j in 1:n if i != j) == 1)
 
-@variable(model, 1 <= place[1:n] <= n)
+# European race constraint (early in the sequence)
+#@constraint(model, european_race_constraint[i in 1:n], is_european_race[i] => {(place[i] <= 10)})  # First third of races
+# For each European race i, sum up the z variables that would place it after position 10
+@constraint(model, european_race_position[i in 1:n], sum(z[i,j] for j in 17:n if i != j) <= (1 - is_european_race[i]))
+
+
+# Tropical race constraint (spread out in the sequence)
+#M = n
+#@constraint(model, tropical_race_constraint1[i in 1:n], -place[i] + 20 <= M*is_tropical_race[i])
+#@constraint(model, tropical_race_constraint2[i in 1:n], place[i] - 14 <= M*(1-is_tropical_race[i]))
+
+
+
 
 # if `z[i, j]` is 1 then
 #   `place[i] >= place[j] + 1`
