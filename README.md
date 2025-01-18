@@ -4,6 +4,7 @@ However, considerations have been made for
 1. Weather
 
 -European races before winter (< October) as it will snow in most parts - IMPLEMENTED
+
 -Tropical races not in monsoon season (<July or >October) as it will rain and that hinders racecraft [TODO]
 
 2. Proximity [IMPLEMENTED]
