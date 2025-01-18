@@ -1,24 +1,24 @@
-Date,Title,Location,Latitude,Longitude
-07-Mar,Saudi Arabia,Jeddah,21.5810088,39.1653612
-22-Mar,Australia,Melbourne,-37.8142454,144.9631732
-05-Apr,Japan,Suzuka,34.8817102,136.5836516
-19-Apr,China,Shanghai,31.2312707,121.4700152
-03-May,Miami,Miami,25.7741728,-80.19362
-17-May,Emilia Romagna,Imola,44.3535145,11.7141233
-24-May,Monaco,Monaco,43.7323492,7.4276832
-07-Jun,Canada,Montreal,45.5031824,-73.5698065
-21-Jun,Spain,Barcelona,41.3828939,2.1774322
-28-Jun,Austria,Spielberg,48.2274518,15.3572755
-05-Jul,United Kingdom,Silverstone,52.0877287,-1.0241177
-19-Jul,Hungary,Budapest,47.4978789,19.0402383
-26-Jul,Belgium,Spa,50.4920654,5.8627569
-23-Aug,Netherlands,Zandvoort,52.3595223,4.535025852
-30-Aug,Italy,Monza,45.6395418,9.278830418
-13-Sep,Azerbaijan,Baku,40.3755885,49.8328009
-20-Sep,Singapore,Singapore,1.357107,103.8194992
-18-Oct,USA,Austin,30.2711286,-97.7436995
-25-Oct,Mexico,Mexico City,19.4326296,-99.1331785
-01-Nov,Brazil,Sao Paulo,-23.5506507,-46.6333824
-21-Nov,Las Vegas,Las Vegas,36.1672559,-115.148516
-29-Nov,Qatar,Lusail,25.4228888,51.5197163
-06-Dec,Abu Dhabi,Yas Marina,24.46722875,54.60790261
+Date,Title,Location,Latitude,Longitude,is_european_race,is_tropical_race
+07-Mar,Saudi Arabia,Jeddah,21.5810088,39.1653612,0,1
+22-Mar,Australia,Melbourne,-37.8142454,144.9631732,0,0
+05-Apr,Japan,Suzuka,34.8817102,136.5836516,0,0
+19-Apr,China,Shanghai,31.2312707,121.4700152,0,0
+03-May,Miami,Miami,25.7741728,-80.19362,0,1
+17-May,Emilia Romagna,Imola,44.3535145,11.7141233,1,0
+24-May,Monaco,Monaco,43.7323492,7.4276832,1,0
+07-Jun,Canada,Montreal,45.5031824,-73.5698065,0,0
+21-Jun,Spain,Barcelona,41.3828939,2.1774322,1,0
+28-Jun,Austria,Spielberg,48.2274518,15.3572755,1,0
+05-Jul,United Kingdom,Silverstone,52.0877287,-1.0241177,1,0
+19-Jul,Hungary,Budapest,47.4978789,19.0402383,1,0
+26-Jul,Belgium,Spa,50.4920654,5.8627569,1,0
+23-Aug,Netherlands,Zandvoort,52.3595223,4.535025852,1,0
+30-Aug,Italy,Monza,45.6395418,9.278830418,1,0
+13-Sep,Azerbaijan,Baku,40.3755885,49.8328009,0,0
+20-Sep,Singapore,Singapore,1.357107,103.8194992,0,1
+18-Oct,USA,Austin,30.2711286,-97.7436995,0,0
+25-Oct,Mexico,Mexico City,19.4326296,-99.1331785,0,1
+01-Nov,Brazil,Sao Paulo,-23.5506507,-46.6333824,0,1
+21-Nov,Las Vegas,Las Vegas,36.1672559,-115.148516,0,0
+29-Nov,Qatar,Lusail,25.4228888,51.5197163,0,1
+06-Dec,Abu Dhabi,Yas Marina,24.46722875,54.60790261,0,1

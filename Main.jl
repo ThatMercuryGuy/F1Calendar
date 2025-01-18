@@ -141,21 +141,8 @@ n = 23
 @constraint(model, one_outgoing_edge[i in 1:n], sum(z[i, j] for j in 1:n if i != j) == 1)
 
 # European race constraint (early in the sequence)
-#@constraint(model, european_race_constraint[i in 1:n], is_european_race[i] => {(place[i] <= 10)})  # First third of races
-# For each European race i, sum up the z variables that would place it after position 10
-@constraint(model, european_race_position[i in 1:n], sum(z[i,j] for j in 17:n if i != j) <= (1 - is_european_race[i]))
+@constraint(model, european_race_position[i in 1:n], sum(z[i,j] for j in 17:n if i != j) == (1 - is_european_race[i]))
 
-
-# Tropical race constraint (spread out in the sequence)
-#M = n
-#@constraint(model, tropical_race_constraint1[i in 1:n], -place[i] + 20 <= M*is_tropical_race[i])
-#@constraint(model, tropical_race_constraint2[i in 1:n], place[i] - 14 <= M*(1-is_tropical_race[i]))
-
-
-
-
-# if `z[i, j]` is 1 then
-#   `place[i] >= place[j] + 1`
 
 @constraint(model, mtz[i in 1:n, j in 1:n; i != j && j != 1], n * (1 - z[i, j]) + place[i] >= place[j] + 1)
 @objective(model, Min, sum(z[i, j] * haversine([df[i, :].Latitude, df[i, :].Longitude], [df[j, :].Latitude, df[j, :].Longitude]) for i in 1:n for j in 1:n if i != j));
